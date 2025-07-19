@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magic Number Game</title>
+
+  <!-- Cartoon Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Baloo Bhai 2', cursive;
+      background: linear-gradient(to top, #c2f0f7, #fdf6e3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #ff69b4;
+      font-size: 2em;
+      text-shadow: 1px 1px 2px #fff;
+      margin-bottom: 20px;
+    }
+
+    button, input {
+      padding: 12px 18px;
+      font-size: 18px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Baloo Bhai 2', cursive;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+      transform: scale(1.05);
+    }
+
+    input {
+      border: 2px solid #ff69b4;
+      text-align: center;
+    }
+
+    #gameSection {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fffbea;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      min-width: 300px;
+    }
+
+    #resultText, #guessHistory {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #ff4500;
+    }
+
+    #playAgain {
+      display: none;
+      margin-top: 15px;
+      background-color: #4CAF50;
+    }
+
+    #playAgain:hover {
+      background-color: #388e3c;
+    }
+
+    /* Optional Cartoon Character */
+    .character {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎲 Guess the Magic Number (1 to 20)</h1>
+  <button onclick="startGame()">🎮 Play Now</button>
+
+  <div id="gameSection">
+    <input type="number" id="guessInput" placeholder="Enter your guess" />
+    <button onclick="checkGuess()">🎯 Guess</button>
+    <p id="resultText"></p>
+    <p id="guessHistory"></p>
+    <button id="playAgain" onclick="resetGame()">🔁 Play Again</button>
+  </div>
+
+  <!-- Optional Cartoon Character (replace with your own image if you want) -->
+  <img src="https://www.shutterstock.com/image-vector/cartoon-anime-characters-cute-cats-600w-2440463999.jpg" alt="Character" class="character" />
+
+  <script>
+    const magicNumber = Math.floor(Math.random() * 20) + 1;
+    const guesses = [];
+
+    function startGame() {
+      document.querySelector('button').style.display = 'none';
+      document.getElementById("gameSection").style.display = 'flex';
+    }
+
+    function checkGuess() {
+      const userGuess = parseInt(document.getElementById("guessInput").value);
+      const result = document.getElementById("resultText");
+      const history = document.getElementById("guessHistory");
+
+      if (isNaN(userGuess)) {
+        result.textContent = "⚠ Please enter a valid number.";
+        return;
+      }
+
+      guesses.push(userGuess);
+      history.textContent = "📜 Your guesses: " + guesses.join(", ");
+
+      if (userGuess < magicNumber) {
+        result.textContent = "📉 Too low! Try again.";
+      } else if (userGuess > magicNumber) {
+        result.textContent = "📈 Too high! Try again.";
+      } else {
+        result.textContent = "🎉 Woohoo! You guessed it right!";
+        alert("🎊 Congratulations! You won!");
+        document.getElementById("playAgain").style.display = "inline-block";
+      }
+    }
+
+    function resetGame() {
+      alert("👋 Thanks for playing!");
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>
